@@ -60,8 +60,15 @@ from sklearn.tree import DecisionTreeRegressor
 from collections import OrderedDict, namedtuple
 
 # String
-from string import maketrans
-import cStringIO
+#import str
+#from string import maketrans
+#import cStringIO
+from io import StringIO
+if sys.version_info < (3,):
+    import string
+    TRANSTAB = string.maketrans("ACGTN", "TGCAN")
+else:
+    TRANSTAB = str.maketrans("ACGTN", "TGCAN")
 
 # PDF report building
 import time
@@ -140,7 +147,7 @@ def changeCase(seq):
     """Change lower case to UPPER CASE for a sequence string."""
     return seq.upper()
 
-def reverseComplement(seq, transtab=maketrans('ATGCN', 'TACGN')):
+def reverseComplement(seq, transtab=TRANSTAB):
     """Reverse Complement a sequence."""
     return changeCase(seq).translate(transtab)[::-1]
 
@@ -1367,7 +1374,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     
     # LOGO SLECTION
     
-    imgdata = cStringIO.StringIO()
+    imgdata = StringIO()
     fig_logo = GraphLogo(P_class, P_left, P_right, draw)
     fig_logo.savefig(imgdata, format='png')
     imgdata.seek(0)
@@ -1379,7 +1386,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     if isinstance(P_left, int) and isinstance(P_right, int) and not Mu_like:
         Zoom_left  = min(P_left-1000, P_right-1000)
         Zoom_right = max(P_left+1000, P_right+1000)
-        imgdata = cStringIO.StringIO()
+        imgdata = StringIO()
         if P_orient == "Reverse":
             zoom_pos_left  = P_right-max(0,Zoom_left)
             zoom_pos_right = P_left-max(0,Zoom_left)
@@ -1400,7 +1407,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
         report.append(Spacer(1, 5))
 
     elif isinstance(P_left, int) and P_orient == "Forward":
-        imgdata = cStringIO.StringIO()
+        imgdata = StringIO()
 
         if Mu_like:
             figZL_whole = GraphWholeCov(phage_hybrid_coverage[0][max(0,P_left-1000):min(gen_len,P_left+1000)], phagename + "-zoom-left", draw, P_left, "", P_left-max(0,P_left-1000), 0, 1, "Zoom Termini")
@@ -1417,7 +1424,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
         report.append(t)
 
     elif isinstance(P_right, int) and P_orient == "Reverse":
-        imgdata = cStringIO.StringIO()
+        imgdata = StringIO()
         
         if Mu_like:
             figZR_whole = GraphWholeCov(phage_hybrid_coverage[1][max(0,P_right-1000):min(gen_len,P_right+1000)], phagename + "-zoom-right", draw, "", P_right, 0, P_right-max(0,P_right-1000), 1, "Zoom Termini")
@@ -1490,7 +1497,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     report.append(Spacer(1, 10))
 
     # Results
-    imgdata = cStringIO.StringIO()
+    imgdata = StringIO()
     figP_norm = GraphCov(termini_coverage_norm_close, picMaxPlus_norm_close[:1], picMaxMinus_norm_close[:1], phagename + "-norm", 1, draw)
     figP_norm.savefig(imgdata, format='png')
     imgdata.seek(0)
@@ -1525,7 +1532,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     report.append(Spacer(1, 10))
 
     # Results
-    imgdata = cStringIO.StringIO()
+    imgdata = StringIO()
     figP = GraphCov(termini_coverage_close, picMaxPlus_close[:1], picMaxMinus_close[:1], phagename, 0, draw)
     figP.savefig(imgdata, format='png')
     imgdata.seek(0)
@@ -1559,7 +1566,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
         report.append(t)
         report.append(Spacer(1, 5))
 
-        imgdata = cStringIO.StringIO()
+        imgdata = StringIO()
         figH = GraphCov(host_whole_coverage, picMaxPlus_host[:1], picMaxMinus_host[:1], "", 0, draw)
         figH.savefig(imgdata, format='png')
         imgdata.seek(0)
@@ -1585,7 +1592,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
         picMaxPlus_phage_hybrid, picMaxMinus_phage_hybrid, TopFreqH_phage_hybrid = picMax(phage_hybrid_coverage, 5)
         picMaxPlus_host_hybrid, picMaxMinus_host_hybrid, TopFreqH_host_hybrid    = picMax(host_hybrid_coverage, 5)
         
-        imgdataPH      = cStringIO.StringIO()
+        imgdataPH      = StringIO()
         figPH          = GraphCov(phage_hybrid_coverage, picMaxPlus_phage_hybrid[:1], picMaxMinus_phage_hybrid[:1], "", 0, draw, 1)
         figPH.savefig(imgdataPH, format='png')
         imgdataPH.seek(0)
@@ -1594,7 +1601,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
         IMAGEPH.hAlign = 'CENTER'
 
 
-        imgdataHH      = cStringIO.StringIO()
+        imgdataHH      = StringIO()
         figHH          = GraphCov(host_hybrid_coverage, picMaxPlus_host_hybrid[:1], picMaxMinus_host_hybrid[:1], "", 0, draw, 1)
         figHH.savefig(imgdataHH, format='png')
         imgdataHH.seek(0)
@@ -1627,7 +1634,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     report.append(Paragraph(ptext, styles["Justify"]))
     report.append(Spacer(1, 5))
     
-    imgdata = cStringIO.StringIO()
+    imgdata = StringIO()
     
     if paired != "":
         figP_whole = GraphWholeCov(added_paired_whole_coverage, phagename, draw)
@@ -1661,7 +1668,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     report.append(Paragraph(ptext, styles["Justify"]))
     report.append(Spacer(1, 5))
 
-    imgdata = cStringIO.StringIO()
+    imgdata = StringIO()
 
     if Mu_like and isinstance(P_left, int):
         figHL_whole = GraphWholeCov(phage_hybrid_coverage[0][max(0,P_left-1000):min(gen_len,P_left+1000)], phagename + "-zoom-left", draw, P_left, "", P_left-max(0,P_left-1000), 0, 1, "Zoom Termini")
@@ -1674,7 +1681,7 @@ def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left,
     IMAGE = Image(IMG.fileName, width=275, height=340, kind='proportional')
     IMAGE.hAlign = 'CENTER'
         
-    imgdata2 = cStringIO.StringIO()
+    imgdata2 = StringIO()
 
     if Mu_like and isinstance(P_right, int):
         figHR_whole = GraphWholeCov(phage_hybrid_coverage[1][max(0,P_right-1000):min(gen_len,P_right+1000)], phagename + "-zoom-right", draw, "", P_right, 0, P_right-max(0,P_right-1000), 1, "Zoom Termini")
