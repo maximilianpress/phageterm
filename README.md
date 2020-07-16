@@ -7,7 +7,7 @@ PhageTerm.py - run as command line in a shell
 UPDATES
 =======
 MOP Update: 
-added env.yml files for python install. Tested on MacOSX.
+added env.yml files for python install. Changed some print statements to python3-compatible. Tested on MacOSX.
 
 Bug fix:
 When the repeat region (of DTR phages) wraps around the reference contig ends, the first and last bases of the repeat region were missing in the reported sequence.
@@ -37,6 +37,14 @@ The PhageTerm program and information is available at https://sourceforge.net/pr
 
 A Galaxy wrapper version is also available at https://galaxy.pasteur.fr
 
+INSTALL
+============
+Currently only [conda](https://docs.conda.io/en/latest/) installation is supported. 
+
+# python2
+$ conda env create -f env.yml
+# python3
+$ conda env create -f env3.yml
 
 PREREQUISITES
 =============
