@@ -1,0 +1,16 @@
+name: phageterm3
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - python=3.6
+  - numpy
+  - pandas
+  - pysam
+  - biopython
+  - scikit-learn
+  - scipy
+  - statsmodels
+  - reportlab
+  - matplotlib
+
