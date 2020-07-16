@@ -109,7 +109,7 @@ def checkFastaFile(filin):
 def checkPhageName(phagename):
     """Normalise phagename (take out any special char)"""
     phagenameNorm = ""
-    charok = range(48,58) + range(65,91) + range(97,123) + [45,95]
+    charok = list(range(48,58)) + list(range(65,91)) + list(range(97,123)) + [45,95]
     for char in phagename:
         if ord(char) in charok:
             phagenameNorm += char
@@ -123,7 +123,7 @@ def checkPhageName(phagename):
 def chunks(l, n):
     """Yield n successive chunks from l."""
     newn = int(1.0 * len(l) / n + 0.5)
-    for i in xrange(0, n-1):
+    for i in range(0, n-1):
         yield l[i*newn:i*newn+newn]
     yield l[n*newn-newn:]
 
@@ -503,10 +503,10 @@ def testwholeCov(added_whole_coverage, ave_whole_cov, test):
 
 def longest_common_substring(read, refseq):
     """Longest common substring between two strings."""
-    m = [[0] * (1 + len(refseq)) for i in xrange(1 + len(read))]
+    m = [[0] * (1 + len(refseq)) for i in range(1 + len(read))]
     longest, x_longest = 0, 0
-    for x in xrange(1, 1 + len(read)):
-        for y in xrange(1, 1 + len(refseq)):
+    for x in range(1, 1 + len(read)):
+        for y in range(1, 1 + len(refseq)):
             if read[x - 1] == refseq[y - 1]:
                 m[x][y] = m[x - 1][y - 1] + 1
                 if m[x][y] > longest:
@@ -1242,7 +1242,7 @@ def GraphLogo(P_class, P_left, P_right, draw):
 def exportDataSplit(sequence, split):
     """Export sequence with split line length."""
     seq = ""
-    for i in xrange((len(sequence)/split)+1):
+    for i in range((len(sequence)/split)+1):
         seq += "".join(map(str,sequence[i*split:(i+1)*split])) + '\n'
     return seq
 
