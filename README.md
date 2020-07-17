@@ -41,11 +41,13 @@ INSTALL
 ============
 Currently only [conda](https://docs.conda.io/en/latest/) installation is supported. 
 
+```
 # python2
 # won't work with the python3 upgrades, but will work with authors' original 1.0.12 code.
 $ conda env create -f env.yml
 # python3
 $ conda env create -f env3.yml
+```
 
 PREREQUISITES
 =============
