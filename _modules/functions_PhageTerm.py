@@ -649,8 +649,8 @@ def test_pics_decision_tree(whole_coverage, termini_coverage, termini_coverage_n
     L=len(whole_coverage[0])
     res=pd.DataFrame({"Position":np.array(range(L))+1, "termini_plus": termini_coverage[0], "SPC_norm_plus":termini_coverage_norm[0], "SPC_norm_minus":termini_coverage_norm[1], "SPC_norm_plus_close":termini_coverage_norm_close[0], "SPC_norm_minus_close":termini_coverage_norm_close[1], "termini_minus": termini_coverage[1],"cov_plus": whole_coverage[0], "cov_minus": whole_coverage[1]})
     res["cov"]=res["cov_plus"].values+res["cov_minus"].values
-    res["R_plus"]=map(float,termini_coverage[0])/np.mean(termini_coverage[0])
-    res["R_minus"]=map(float,termini_coverage[1])/np.mean(termini_coverage[1])
+    res["R_plus"]=list(map(float,termini_coverage[0]))/np.mean(termini_coverage[0])
+    res["R_minus"]=list(map(float,termini_coverage[1]))/np.mean(termini_coverage[1])
     
     regr = DecisionTreeRegressor(max_depth=3,min_samples_leaf=100)
     X    = np.arange(L)
