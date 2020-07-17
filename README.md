@@ -7,7 +7,7 @@ PhageTerm.py - run as command line in a shell
 UPDATES
 =======
 MOP Update: 
-added env.yml files for python install. Changes to make python3-compatible. Tested on MacOSX py3.
+added env.yml files for conda install. Changes to make python3-compatible. Tested on MacOSX py3.
 
 Bug fix:
 When the repeat region (of DTR phages) wraps around the reference contig ends, the first and last bases of the repeat region were missing in the reported sequence.
@@ -45,6 +45,7 @@ Currently only [conda](https://docs.conda.io/en/latest/) installation is support
 # python2
 # won't work with the python3 upgrades, but will work with authors' original 1.0.12 code.
 $ conda env create -f env.yml
+
 # python3
 $ conda env create -f env3.yml
 ```
