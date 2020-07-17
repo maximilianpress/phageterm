@@ -7,7 +7,7 @@ PhageTerm.py - run as command line in a shell
 UPDATES
 =======
 MOP Update: 
-added env.yml files for python install. Changed some print statements to python3-compatible. Tested on MacOSX.
+added env.yml files for python install. Changes to make python3-compatible. Tested on MacOSX py3.
 
 Bug fix:
 When the repeat region (of DTR phages) wraps around the reference contig ends, the first and last bases of the repeat region were missing in the reported sequence.
