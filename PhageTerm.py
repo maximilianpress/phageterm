@@ -284,7 +284,6 @@ for j in jobs:
 print("\n\nFinished calculating coverage values, the remainder should be completed rapidly\n")
 
 # merging results
-print(return_dict)
 for core_id in range(core):
     if core_id == 0:
         termini_coverage       = return_dict[core_id][0]
