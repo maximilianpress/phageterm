@@ -60,9 +60,6 @@ from sklearn.tree import DecisionTreeRegressor
 from collections import OrderedDict, namedtuple
 
 # String
-#import str
-#from string import maketrans
-#import cStringIO
 from io import StringIO
 if sys.version_info < (3,):
     import string
@@ -545,9 +542,9 @@ def picMax(coverage, nbr_pic):
     """COORDINATES (coverage value, position) of the nbr_pic largest coverage value."""
     if coverage == [[],[]] or coverage == []:
         return "", "", ""
-    picMaxPlus = heapq.nlargest(nbr_pic, zip(coverage[0], itertools.count()))
-    picMaxMinus = heapq.nlargest(nbr_pic, zip(coverage[1], itertools.count()))
-    TopFreqH = max(max(np.array(zip(*picMaxPlus)[0])), max(np.array(zip(*picMaxMinus)[0])))
+    picMaxPlus = heapq.nlargest(nbr_pic, list(zip(coverage[0], itertools.count())))
+    picMaxMinus = heapq.nlargest(nbr_pic, list(zip(coverage[1], itertools.count())))
+    TopFreqH = max(max(np.array(list(zip(*picMaxPlus))[0])), max(np.array(list(zip(*picMaxMinus))[0])))
     return picMaxPlus, picMaxMinus, TopFreqH
     
 
@@ -942,11 +939,11 @@ def GraphCov(termini_coverage, picMaxPlus, picMaxMinus, phagename, norm, draw, h
     if norm == 1:
         ylim = 1.2
     elif hybrid == 1:
-        offset = 0.2*(max(np.array(zip(*picMaxPlus)[0]))) + 1
-        ylim = max(np.array(zip(*picMaxPlus)[0])) + offset
+        offset = 0.2*(max(np.array(list(zip(*picMaxPlus))[0]))) + 1
+        ylim = max(np.array(list(zip(*picMaxPlus))[0])) + offset
     else:
-        offset = 0.2*(max(max(np.array(zip(*picMaxPlus)[0])), max(np.array(zip(*picMaxMinus)[0]))))
-        ylim = max(max(np.array(zip(*picMaxPlus)[0])), max(np.array(zip(*picMaxMinus)[0]))) + offset
+        offset = 0.2*(max(max(np.array(list(zip(*picMaxPlus))[0])), max(np.array(list(zip(*picMaxMinus))[0]))))
+        ylim = max(max(np.array(list(zip(*picMaxPlus))[0])), max(np.array(list(zip(*picMaxMinus))[0]))) + offset
     # Strand (+)
     plt.subplot(211)
     if norm == 1:
@@ -959,8 +956,8 @@ def GraphCov(termini_coverage, picMaxPlus, picMaxMinus, phagename, norm, draw, h
     axes = plt.gca()
     axes.set_ylim([0,ylim])
     # Maximum
-    x_strandplus = np.array(zip(*picMaxPlus)[1])
-    y_strandplus = np.array(zip(*picMaxPlus)[0])
+    x_strandplus = np.array(list(zip(*picMaxPlus))[1])
+    y_strandplus = np.array(list(zip(*picMaxPlus))[0])
     # Plot
     plt.plot(x_strandplus, y_strandplus, 'ro')
     if norm == 1:
@@ -984,13 +981,13 @@ def GraphCov(termini_coverage, picMaxPlus, picMaxMinus, phagename, norm, draw, h
     plt.ylabel('')
     # Axes
     if hybrid == 1:
-        offset = 0.2*(max(np.array(zip(*picMaxMinus)[0]))) + 1
-        ylim = max(np.array(zip(*picMaxMinus)[0])) + offset
+        offset = 0.2*(max(np.array(list(zip(*picMaxMinus))[0]))) + 1
+        ylim = max(np.array(list(zip(*picMaxMinus))[0])) + offset
     axes = plt.gca()
     axes.set_ylim([0,ylim])
     # Maximum
-    x_strandminus = np.array(zip(*picMaxMinus)[1])
-    y_strandminus = np.array(zip(*picMaxMinus)[0])
+    x_strandminus = np.array(list(zip(*picMaxMinus))[1])
+    y_strandminus = np.array(list(zip(*picMaxMinus))[0])
     # Plot
     plt.plot(x_strandminus, y_strandminus, 'ro')
     if norm == 1:
