@@ -174,14 +174,14 @@ def readsCoverage(fastq, refseq, hostseq, tot_reads, seed, edge, paired, insert_
     
     # Mapping
     if fastq.endswith('.gz'):
-        filin        = gzip.open(fastq, 'rb')
+        filin        = gzip.open(fastq, 'rt')
     else:
         filin        = open(fastq)
     line             = filin.readline()
     
     if paired != "":
         if paired.endswith('.gz'):
-            filin_paired = gzip.open(paired, 'rb')
+            filin_paired = gzip.open(paired, 'rt')
         else:
             filin_paired = open(paired)
         line_paired  = filin_paired.readline()
@@ -518,7 +518,7 @@ def longest_common_substring(read, refseq):
 def totReads(filin):
     """Verify and retrieve the number of reads in the fastq file before alignment"""
     if filin.endswith('.gz'):
-        filein = gzip.open(filin, 'rb')
+        filein = gzip.open(filin, 'rt')
     else:
         filein = open(filin, 'r')
 
