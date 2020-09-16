@@ -616,7 +616,7 @@ def RemoveClosePicMax(picMax, gen_len, nbr_base):
         PosOut = range(LimInf,LimSup)
     elif LimSup >= gen_len:
         TurnSup = LimSup - gen_len
-        PosOut = list(range(posMax,gen_len)+range(0,TurnSup)) + list(range(LimInf,posMax))
+        PosOut = list(range(posMax,gen_len))+list(range(0,TurnSup)) + list(range(LimInf,posMax))
     elif LimInf < 0:
         TurnInf = gen_len + LimInf
         PosOut = list(range(0,posMax))+ list(range(TurnInf,gen_len)) + list(range(posMax,LimSup))
