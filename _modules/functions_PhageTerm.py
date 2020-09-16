@@ -1239,7 +1239,7 @@ def GraphLogo(P_class, P_left, P_right, draw):
 def exportDataSplit(sequence, split):
     """Export sequence with split line length."""
     seq = ""
-    for i in range((len(sequence)/split)+1):
+    for i in range(int((len(sequence)/split)+1)):
         seq += "".join(map(str,sequence[i*split:(i+1)*split])) + '\n'
     return seq
 
