@@ -1343,11 +1343,22 @@ def ExportPhageSequence(phagename, P_left, P_right, refseq, P_orient, Redundant,
             seq_out = reverseComplement(refseq[:P_right]) + reverseComplement(refseq[P_right:])
         else:
             seq_out = refseq[P_left-1:] + refseq[:P_left-1]
+    # DTR not captured above (?)
+    elif P_class.startswith("DTR"):
+        if abs(P_left-P_right) > len(refseq)/2:
+            seq_out = refseq[min(P_left,P_right)-1:max(P_left,P_right)]
+        else:
+            seq_out = refseq[max(P_left,P_right):] + refseq[:min(P_left,P_right)-1]
+        seq_out = P_seqcoh + seq_out + P_seqcoh
+    else:
+        print("phage did not match conditionals for some reason")
 
-    if seq_out != "":
-        filout = open(phagename + "_sequence.fasta", "w")
-        filout.write(">" + phagename + " sequence re-organized\n" + exportDataSplit(seq_out, 60))
-        filout.close()
+
+ 
+
+    filout = open(phagename + "_sequence.fasta", "w")
+    filout.write(">" + phagename + " sequence re-organized\n" + exportDataSplit(seq_out, 60))
+    filout.close()
     return
 
 def CreateReport(phagename, seed, added_whole_coverage, draw, Redundant, P_left, P_right, Permuted, P_orient, termini_coverage_norm_close, picMaxPlus_norm_close, picMaxMinus_norm_close, gen_len, tot_reads, P_seqcoh, phage_plus_norm, phage_minus_norm, ArtPackmode, termini, forward, reverse, ArtOrient, ArtcohesiveSeq, termini_coverage_close, picMaxPlus_close, picMaxMinus_close, picOUT_norm_forw, picOUT_norm_rev, picOUT_forw, picOUT_rev, lost_perc, ave_whole_cov, R1, R2, R3, host, host_len, host_whole_coverage, picMaxPlus_host, picMaxMinus_host, surrounding, drop_cov, paired, insert, phage_hybrid_coverage, host_hybrid_coverage, added_paired_whole_coverage, Mu_like, test_run, P_class, P_type, P_concat):
